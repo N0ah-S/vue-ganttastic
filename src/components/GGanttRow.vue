@@ -8,7 +8,11 @@
     @mouseover="isHovering = true"
     @mouseleave="isHovering = false"
   >
-    <div class="g-gantt-row-label" :style="{ background: colors.primary, color: colors.text }">
+    <div
+      v-if="!isBlank(label) && !labelColumnTitle"
+      class="g-gantt-row-label"
+      :style="{ background: colors.primary, color: colors.text }"
+    >
       <slot name="label">
         {{ label }}
       </slot>
@@ -42,7 +46,7 @@ const emit = defineEmits<{
   (e: "drop", value: { e: MouseEvent; datetime: string | Date }): void
 }>()
 
-const { rowHeight, colors } = provideConfig()
+const { rowHeight, colors, labelColumnTitle } = provideConfig()
 const { highlightOnHover } = toRefs(props)
 const isHovering = ref(false)
 
@@ -68,6 +72,11 @@ const onDrop = (e: MouseEvent) => {
   const datetime = mapPositionToTime(xPos)
   emit("drop", { e, datetime })
 }
+
+const isBlank = (str: string) => {
+  return (!str || /^\s*$/.test(str))
+}
+
 </script>
 
 <style>
