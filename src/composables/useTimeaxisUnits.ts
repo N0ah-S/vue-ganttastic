@@ -47,7 +47,7 @@ export default function useTimeaxisUnits() {
   const timeaxisUnits = computed(() => {
     const upperUnits: { label: string; value?: string; date: Date; width?: string }[] = []
     const lowerUnits: { label: string; value?: string; date: Date; width?: string, highlight?: boolean }[] = []
-    const upperUnit = upperPrecision.value === "day" ? "date" : upperPrecision.value
+    const upperUnit = upperPrecision.value
     const lowerUnit = lowerPrecision.value
     let currentUnit = chartStartDayjs.value.startOf(lowerUnit)
     const totalMinutes = chartEndDayjs.value.diff(chartStartDayjs.value, "minutes", true)
